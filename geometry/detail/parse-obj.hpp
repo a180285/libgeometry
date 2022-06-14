@@ -298,7 +298,15 @@ bool parse(Iterator begin, Iterator end, ObjParserBase &p)
     Obj o(p);
 
     bool r(phrase_parse(begin, end, qrammar, skipper_type(), o));
-
+    if (begin != end) {
+        auto tmpBegin = begin;
+        std::string left_obj = "";
+        while (tmpBegin != end) {
+            left_obj += *tmpBegin;
+            tmpBegin++;
+        }
+        LOG(err4) << "Unable to parse obj left part: \n" << left_obj;
+    }
     return (r && (begin == end));
 }
 
